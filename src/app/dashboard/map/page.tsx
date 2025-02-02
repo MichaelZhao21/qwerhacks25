@@ -3,7 +3,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-<<<<<<< HEAD
 import { LandmarkName, startPainting } from '@/app/components/landmarks';
 
 type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
@@ -16,9 +15,7 @@ const flagColors: Record<Identity, string[]> = {
   lesbian: ['#D52D00', '#EF7627', '#FF9A56', '#FFFFFF', '#D162A4', '#B55690', '#A30262'],
   nonbinary: ['#FCF434', '#FFFFFF', '#9C59D1', '#2C2C2C']
 };
-=======
 import { useIdentity } from '@/context/IdentityContext';
->>>>>>> origin/vach
 
 interface Landmark {
   id: number;

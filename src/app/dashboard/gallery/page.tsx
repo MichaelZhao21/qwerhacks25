@@ -9,7 +9,7 @@ import Tongva from '@/app/assets/thumb/tongva.png';
 
 // type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
 
-import { useIdentity } from '@/context/IdentityContext';
+import { Identity, useIdentity } from '@/context/IdentityContext';
 
 const flagColors: Record<Identity, string[]> = {
   pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
