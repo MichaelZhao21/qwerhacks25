@@ -6,6 +6,11 @@ from src.imgtopaint import image_to_paint_by_numbers
 app = Flask(__name__)
 CORS(app)
 
+@app.route("/")
+def index():
+    return "Hello, World!"
+
+
 @app.route("/generate", methods=["POST"])
 def generate():
     # Get parameters from the request
