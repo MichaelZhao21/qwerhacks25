@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, DynaPuff } from "next/font/google";
 import "./globals.css";
+import { IdentityProvider } from '@/context/IdentityContext'
 
 const dynaPuff = DynaPuff({
   subsets: ['latin'],
@@ -32,7 +33,9 @@ export default function RootLayout({
       suppressHydrationWarning={true}
         className={`${dynaPuff.style.fontFamily} ${geistMono.variable} antialiased`}
       >
+      <IdentityProvider>
         {children}
+        </IdentityProvider>
       </body>
     </html>
   );

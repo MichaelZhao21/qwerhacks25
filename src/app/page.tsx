@@ -1,24 +1,19 @@
 // src/app/page.tsx
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
 import { ChevronDown } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-
-type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
-
-const flagColors: Record<Identity, string[]> = {
-  pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
-  trans: ['#55CDFC', '#F7A8B8', '#FFFFFF', '#F7A8B8', '#55CDFC'],
-  bi: ['#D60270', '#9B4F96', '#0038A8'],
-  pan: ['#FF218C', '#FFD800', '#21B1FF'],
-  lesbian: ['#D52D00', '#EF7627', '#FF9A56', '#FFFFFF', '#D162A4', '#B55690', '#A30262'],
-  nonbinary: ['#FCF434', '#FFFFFF', '#9C59D1', '#2C2C2C']
-};
+import { useIdentity, Identity } from '@/context/IdentityContext';
 
 export default function Home() {
-
   const router = useRouter();
+  const { 
+    selectedIdentity, 
+    setSelectedIdentity, 
+    generateGradient, 
+    getIdentityColors 
+  } = useIdentity();
 
   const handleLogin = () => {
     router.push('/dashboard');
@@ -28,12 +23,7 @@ export default function Home() {
     router.push('/signup');
   };
 
-  const [selectedIdentity, setSelectedIdentity] = useState<Identity>('pride');
-  const colors = flagColors[selectedIdentity];
-
-  const generateGradient = (colors: string[]) => {
-    return `linear-gradient(135deg, ${colors.join(', ')})`;
-  };
+  const colors = getIdentityColors();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
@@ -43,7 +33,7 @@ export default function Home() {
       >
         <div className="bg-white rounded-xl p-8 space-y-6">
           {/* Logo */}
-          <div className="w-48 h-16 mx-auto">
+          <div className="w-64 h-32 mx-auto">
             <img 
               src="/logo.png" 
               alt="CAMPUS"
