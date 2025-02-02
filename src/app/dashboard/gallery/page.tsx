@@ -3,7 +3,9 @@
 
 import { useRouter } from 'next/navigation';
 
-type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
+// type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
+
+import { useIdentity } from '@/context/IdentityContext';
 
 const flagColors: Record<Identity, string[]> = {
   pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
@@ -17,11 +19,13 @@ const flagColors: Record<Identity, string[]> = {
 export default function DashboardPage() {
   const router = useRouter();
 
-  const selectedIdentity: Identity = 'pride';
+//   const selectedIdentity: Identity = 'pride';
 
-  const generateGradient = (colors: string[]) => {
-    return `linear-gradient(135deg, ${colors.join(', ')})`;
-  };
+//   const generateGradient = (colors: string[]) => {
+//     return `linear-gradient(135deg, ${colors.join(', ')})`;
+//   };
+
+const { selectedIdentity, getIdentityColors, generateGradient } = useIdentity();
 
   const GalleryCard = ({ 
     location, 
@@ -35,13 +39,11 @@ export default function DashboardPage() {
     onLearnMore: () => void 
   }) => (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden text-gray-800">
-      {/* Location Text */}
       <div className="p-4 border-b">
         <h3 className="text-lg font-medium">{location}</h3>
         <h4 className="text-md font-medium text-gray-600">{city}</h4>
       </div>
       
-      {/* Placeholder Image */}
       <div className="aspect-video bg-gray-100 flex items-center justify-center">
         <img 
           src={imageSrc} 
@@ -50,7 +52,6 @@ export default function DashboardPage() {
         />
       </div>
       
-      {/* Action Button */}
       <div className="p-4 bg-white flex justify-center">
         <div className="p-1 rounded-lg" style={{ background: generateGradient(flagColors[selectedIdentity]) }}>
           <button 

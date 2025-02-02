@@ -3,17 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-
-type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
-
-const flagColors: Record<Identity, string[]> = {
-  pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
-  trans: ['#55CDFC', '#F7A8B8', '#FFFFFF', '#F7A8B8', '#55CDFC'],
-  bi: ['#D60270', '#9B4F96', '#0038A8'],
-  pan: ['#FF218C', '#FFD800', '#21B1FF'],
-  lesbian: ['#D52D00', '#EF7627', '#FF9A56', '#FFFFFF', '#D162A4', '#B55690', '#A30262'],
-  nonbinary: ['#FCF434', '#FFFFFF', '#9C59D1', '#2C2C2C']
-};
+import { useIdentity } from '@/context/IdentityContext';
 
 interface Landmark {
   id: number;
@@ -37,7 +27,7 @@ const landmarks: Landmark[] = [
     id: 2,
     name: "Royce Hall",
     location: { lat: 34.0722, lng: -118.4441 },
-    description: "Royce Hall, UCLA’s most iconic building, is illuminated with rainbow lights during Pride Month to honor and celebrate the LGBTQ+ community. In the past, students organizations like Bimbos Theatre Co. have hosted drag showcases for charity on the big stage.",
+    description: "Royce Hall, UCLA's most iconic building, is illuminated with rainbow lights during Pride Month to honor and celebrate the LGBTQ+ community. In the past, students organizations like Bimbos Theatre Co. have hosted drag showcases for charity on the big stage.",
     imageUrl: "/royce_hall_gay.jpg",
     completed: false
   },
@@ -56,11 +46,26 @@ const landmarks: Landmark[] = [
     description: "Bronze Bruin statue, a popular meeting spot",
     imageUrl: "/bruin_bear.jpeg",
     completed: false
+  },
+  {
+    id: 5,
+    name: "LGBTQ Campus Resource Center",
+    location: { lat: 34.07160320675979, lng: -118.44453628978852},
+    description: "The LGBTQ+ Campus Resource Center provides education and advocacy services for the entire UCLA community - undergraduate students, graduate students, faculty, staff, and alumni. The center hosts weekly programs and events such as Queer Creative Writing and Asexual / Aromantic dialogues weekly. For more information visit: https://lgbtq.ucla.edu/.",
+    imageUrl: "/resource_center.png",
+    completed: false
   }
 ];
 
 export default function MapPage() {
   const router = useRouter();
+  const { 
+    selectedIdentity, 
+    generateGradient, 
+    getIdentityColors 
+  } = useIdentity();
+
+  const colors = getIdentityColors();
   const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
@@ -190,12 +195,17 @@ export default function MapPage() {
             </div>
           )}
           <div className="mt-3 flex justify-end">
-            <button
-              onClick={() => handleStartPainting(selectedLandmark)}
-              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+            <div 
+              className="p-1 rounded-lg inline-block"
+              style={{ background: generateGradient(colors) }}
             >
-              Paint This!
-            </button>
+              <button
+                onClick={() => handleStartPainting(selectedLandmark)}
+                className="px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Paint This!
+              </button>
+            </div>
           </div>
         </div>
       )}

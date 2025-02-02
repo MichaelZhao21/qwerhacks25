@@ -1,27 +1,18 @@
 // src/app/dashboard/profile/page.tsx
 'use client'
 
-import { useState } from 'react';
 import { Settings, Camera, Heart, Edit2, MapPin, Palette } from 'lucide-react';
-
-type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
-
-const flagColors: Record<Identity, string[]> = {
-  pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
-  trans: ['#55CDFC', '#F7A8B8', '#FFFFFF', '#F7A8B8', '#55CDFC'],
-  bi: ['#D60270', '#9B4F96', '#0038A8'],
-  pan: ['#FF218C', '#FFD800', '#21B1FF'],
-  lesbian: ['#D52D00', '#EF7627', '#FF9A56', '#FFFFFF', '#D162A4', '#B55690', '#A30262'],
-  nonbinary: ['#FCF434', '#FFFFFF', '#9C59D1', '#2C2C2C']
-};
+import { useIdentity, Identity } from '@/context/IdentityContext';
 
 export default function ProfilePage() {
-  const [selectedIdentity] = useState<Identity>('pride');
-  const colors = flagColors[selectedIdentity];
+  const { 
+    selectedIdentity, 
+    setSelectedIdentity, 
+    generateGradient, 
+    getIdentityColors 
+  } = useIdentity();
 
-  const generateGradient = (colors: string[]) => {
-    return `linear-gradient(135deg, ${colors.join(', ')})`;
-  };
+  const colors = getIdentityColors();
 
   const stats = [
     { icon: Palette, label: 'Paintings', value: '12' },
@@ -54,7 +45,6 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         {stats.map((stat) => {
           const Icon = stat.icon;
@@ -68,18 +58,17 @@ export default function ProfilePage() {
         })}
       </div>
 
-      {/* Settings */}
       <div className="space-y-4">
         <div className="bg-white p-4 rounded-lg shadow">
           <h2 className="text-lg font-semibold mb-4 text-black">Settings</h2>
           
           <div className="space-y-4">
-            {/* Identity Selection */}
             <div className="flex items-center justify-between">
               <label className="text-black font-medium">Pride Identity</label>
               <select 
                 className="p-2 border rounded-lg"
                 value={selectedIdentity}
+                onChange={(e) => setSelectedIdentity(e.target.value as Identity)}
               >
                 <option value="pride">Pride</option>
                 <option value="trans">Trans</option>
