@@ -66,7 +66,7 @@ export default function ProfilePage() {
             <div className="flex items-center justify-between">
               <label className="text-black font-medium">Pride Identity</label>
               <select 
-                className="p-2 border rounded-lg"
+                className="p-2 border rounded-lg text-black"
                 value={selectedIdentity}
                 onChange={(e) => setSelectedIdentity(e.target.value as Identity)}
               >

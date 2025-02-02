@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 
 interface PaintByNumbersProps {
-    imageSource: string;  // Add this prop
+    imageSource: string; // Add this prop
 }
 export default function PaintByNumbers({ imageSource }: PaintByNumbersProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -267,12 +267,24 @@ export default function PaintByNumbers({ imageSource }: PaintByNumbersProps) {
         });
     };
 
+    const download = () => {
+        // Download the contents of the main canvas
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const link = document.createElement("a");
+        link.download = "painting.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+    };
+
     return (
         <div className="flex flex-col items-center h-full">
             <div className="aspect-video bg-white shadow-lg rounded-lg max-h-[60vh] h-fit w-fit overflow-scroll">
                 {!loaded && (
                     <div className="flex flex-row items-center justify-center w-screen pt-32">
-                        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+                        <div className="fixed top-[-300px] left-0 h-screen w-screen flex flex-row items-center justify-center">
+                            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+                        </div>
                     </div>
                 )}
                 <div
@@ -325,6 +337,14 @@ export default function PaintByNumbers({ imageSource }: PaintByNumbersProps) {
                                 </span>
                             </div>
                         ))}
+                    </div>
+                    <div
+                        className="mt-4 flex justify-center mb-24"
+                        onClick={download}
+                    >
+                        <button className="text-slate-100 bg-slate-400 px-4 py-2 rounded-md">
+                            Download Painting
+                        </button>
                     </div>
                 </div>
             </div>

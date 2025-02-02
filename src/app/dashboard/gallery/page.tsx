@@ -2,10 +2,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation';
+import RoyceHall from '@/app/assets/thumb/royce-hall.png';
+import Bruin from '@/app/assets/bruin.png';
+import Powell from '@/app/assets/thumb/powell.png';
+import Tongva from '@/app/assets/thumb/tongva.png';
 
 // type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
 
-import { useIdentity } from '@/context/IdentityContext';
+import { Identity, useIdentity } from '@/context/IdentityContext';
 
 const flagColors: Record<Identity, string[]> = {
   pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
@@ -74,28 +78,28 @@ const { selectedIdentity, getIdentityColors, generateGradient } = useIdentity();
           <GalleryCard 
             location="Royce Hall" 
             city="LA, CA" 
-            imageSrc="/royce_hall_gay.jpg"
+            imageSrc={RoyceHall.src}
             onLearnMore={() => router.push('/dashboard/paint')}
           />
           
           <GalleryCard 
             location="Powell Library" 
             city="LA, CA" 
-            imageSrc="/powell_library.jpg"
+            imageSrc={Powell.src}
             onLearnMore={() => router.push('/dashboard/paint')}
           />
           
           <GalleryCard 
             location="Tongva Steps" 
             city="LA, CA" 
-            imageSrc="/tongva_steps.jpg"
+            imageSrc={Tongva.src}
             onLearnMore={() => router.push('/dashboard/paint')}
           />
 
         <GalleryCard 
             location="Bruin Bear" 
             city="LA, CA" 
-            imageSrc="/bruin_bear.jpeg"
+            imageSrc={Bruin.src}
             onLearnMore={() => router.push('/dashboard/paint')}
           />
         </div>

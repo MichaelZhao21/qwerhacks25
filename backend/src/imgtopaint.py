@@ -10,7 +10,7 @@ def shrink_img(img: Image.Image, max_size: int = 600) -> Image.Image:
 
     # Don't do anything if the image is already small enough
     if max(width, height) <= max_size:
-        return
+        return img
 
     scale = max_size / max(width, height)
     new_size = (int(width * scale), int(height * scale))

@@ -24,7 +24,7 @@ export default function UploadPage() {
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [location, setLocation] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [colorCount, setColorCount] = useState('10');
+  const [colorCount, setColorCount] = useState('20');
   const [minArea, setMinArea] = useState('50');
   const [error, setError] = useState<string | null>(null);
 
@@ -139,7 +139,7 @@ export default function UploadPage() {
             type="number"
             value={colorCount}
             onChange={(e) => setColorCount(e.target.value)}
-            className="w-full p-2 border rounded-lg"
+            className="w-full p-2 border rounded-lg text-gray-600"
             min="1"
             max="50"
           />
@@ -152,7 +152,7 @@ export default function UploadPage() {
             type="number"
             value={minArea}
             onChange={(e) => setMinArea(e.target.value)}
-            className="w-full p-2 border rounded-lg"
+            className="w-full p-2 border rounded-lg text-gray-600"
             min="1"
             max="200"
           />
@@ -166,11 +166,10 @@ export default function UploadPage() {
           placeholder="Enter location (e.g., Royce Hall, LA, CA)"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
-          className="w-full p-2 border rounded-lg"
+          className="w-full p-2 border rounded-lg text-gray-600"
         />
       </div>
 
-      {/* Error Message */}
       {error && (
         <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
           <p className="text-red-600">{error}</p>
@@ -238,11 +237,11 @@ export default function UploadPage() {
 
       {/* Submit Button */}
       <div className="mt-6 flex justify-center">
-        <div className="p-2 rounded-lg inline-block" style={{ background: generateGradient(flagColors[selectedIdentity]) }}>
+        <div className="p-1 rounded-lg inline-block" style={{ background: generateGradient(flagColors[selectedIdentity]) }}>
           <button 
             onClick={handleStartPainting}
             disabled={!processedImage || !location || isProcessing}
-            className="px-6 py-2 rounded-md font-medium bg-white hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-6 py-2 rounded-md font-medium bg-white hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2 disabled:cursor-not-allowed"
           >
             <Upload className="w-5 h-5" />
             <span className="text-black">Start Painting</span>

@@ -3,6 +3,18 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { LandmarkName, startPainting } from '@/app/components/landmarks';
+
+type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
+
+const flagColors: Record<Identity, string[]> = {
+  pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
+  trans: ['#55CDFC', '#F7A8B8', '#FFFFFF', '#F7A8B8', '#55CDFC'],
+  bi: ['#D60270', '#9B4F96', '#0038A8'],
+  pan: ['#FF218C', '#FFD800', '#21B1FF'],
+  lesbian: ['#D52D00', '#EF7627', '#FF9A56', '#FFFFFF', '#D162A4', '#B55690', '#A30262'],
+  nonbinary: ['#FCF434', '#FFFFFF', '#9C59D1', '#2C2C2C']
+};
 import { useIdentity } from '@/context/IdentityContext';
 
 interface Landmark {
@@ -16,7 +28,7 @@ interface Landmark {
 
 const landmarks: Landmark[] = [
   {
-    id: 1,
+    id: LandmarkName.Jewel,
     name: "Jewel Thais-Williams",
     location: { lat: 34.0669, lng: -118.4422 },
     description: "Jewel Thais-Williams is a UCLA alumni who founded the Catch One. She was the first black woman in the  US to own a nightclub. It was a safe space for LGBTQ+ and Black communities in Los Angeles.",
@@ -24,7 +36,7 @@ const landmarks: Landmark[] = [
     completed: true
   },
   {
-    id: 2,
+    id: LandmarkName.Royce,
     name: "Royce Hall",
     location: { lat: 34.0722, lng: -118.4441 },
     description: "Royce Hall, UCLA's most iconic building, is illuminated with rainbow lights during Pride Month to honor and celebrate the LGBTQ+ community. In the past, students organizations like Bimbos Theatre Co. have hosted drag showcases for charity on the big stage.",
@@ -32,15 +44,15 @@ const landmarks: Landmark[] = [
     completed: false
   },
   {
-    id: 3,
+    id: LandmarkName.Powell,
     name: "Powell Library",
     location: { lat: 34.0715, lng: -118.4419 },
     description: "Main undergraduate library in Romanesque Revival style",
-    imageUrl: "/royce_hall_gay.jpg",
+    imageUrl: "/powell.jpg",
     completed: false
   },
   {
-    id: 4,
+    id: LandmarkName.BruinBear,
     name: "Bruin Bear",
     location: { lat: 34.0708, lng: -118.4425 },
     description: "Bronze Bruin statue, a popular meeting spot",
@@ -149,20 +161,7 @@ export default function MapPage() {
   }, []);
 
   const handleStartPainting = (landmark: Landmark) => {
-    fetch(landmark.imageUrl)
-      .then(response => response.blob())
-      .then(blob => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          localStorage.setItem('paintImage', reader.result as string);
-          localStorage.setItem('paintLocation', landmark.name);
-          router.push('/dashboard/paint');
-        };
-        reader.readAsDataURL(blob);
-      })
-      .catch(error => {
-        console.error('Error loading image:', error);
-      });
+    startPainting(landmark.id, router);
   };
 
   return (
