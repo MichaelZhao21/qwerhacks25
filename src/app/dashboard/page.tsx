@@ -3,6 +3,7 @@
 
 import { useRouter } from 'next/navigation';
 import RoyceHall from '@/app/assets/royce-hall.png';
+import { LandmarkName, startPainting } from '../components/landmarks';
 
 type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
 
@@ -23,21 +24,8 @@ export default function DashboardPage() {
     return `linear-gradient(135deg, ${colors.join(', ')})`;
   };
 
-  async function fetchBase64Image(url: string): Promise<string> {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(blob);
-      reader.onloadend = () => resolve(reader.result as string);
-    });
-  }
-
   const finish = async () => {
-    const img = await fetchBase64Image(RoyceHall.src);
-    localStorage.setItem('paintImage', img);
-    localStorage.setItem('paintLocation', "Royce Hall");
-    router.push('/dashboard/paint');
+    startPainting(LandmarkName.Royce, router);
   }
 
   return (
@@ -46,7 +34,7 @@ export default function DashboardPage() {
       
       {/* Continue Painting Section */}
       <div className="mb-8">
-        <h2 className="text-xl mb-2 text-gray-800">Pick up where you last left off...</h2>
+        <h2 className="text-xl mb-2 text-gray-600">Pick up where you last left off...</h2>
         
         <div className="bg-white rounded-lg shadow-lg overflow-hidden text-gray-800">
           {/* Location Text */}
@@ -56,7 +44,7 @@ export default function DashboardPage() {
             <h4 className="text-md font-medium text-gray-600">LA, CA</h4>          </div>
           
           {/* Placeholder Image */}
-          <div className="aspect-video bg-gray-100 flex items-center justify-center">
+          <div className="aspect-video bg-gray-100 flex items-center justify-center max-h-[60vh] w-full object-contain">
             <img 
               src="/royce_hall_gay.jpg" 
               alt="Royce Hall WIP"
@@ -79,13 +67,13 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="p-4 bg-white">
+      <div className="pb-24 px-4">
             <div className="p-1 rounded-lg" style={{ background: generateGradient(flagColors[selectedIdentity]) }}>
               <button 
                 onClick={() => router.push('/dashboard/upload')}
                 className="w-full py-3 px-6 rounded-md font-medium bg-white hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
               >
-                <span className="text-gray-800">New</span>
+                <span className="text-gray-800">Create your Own</span>
               </button>
             </div>
           </div>

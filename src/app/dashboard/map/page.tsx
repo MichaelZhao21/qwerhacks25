@@ -3,6 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { LandmarkName, startPainting } from '@/app/components/landmarks';
 
 type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
 
@@ -26,7 +27,7 @@ interface Landmark {
 
 const landmarks: Landmark[] = [
   {
-    id: 1,
+    id: LandmarkName.Jewel,
     name: "Jewel Thais-Williams",
     location: { lat: 34.0669, lng: -118.4422 },
     description: "UCLA Alumni Center, named after the revolutionary LGBTQ+ and civil rights activist",
@@ -34,7 +35,7 @@ const landmarks: Landmark[] = [
     completed: true
   },
   {
-    id: 2,
+    id: LandmarkName.Royce,
     name: "Royce Hall",
     location: { lat: 34.0722, lng: -118.4441 },
     description: "Iconic UCLA building with Roman-collegiate architecture",
@@ -42,15 +43,15 @@ const landmarks: Landmark[] = [
     completed: false
   },
   {
-    id: 3,
+    id: LandmarkName.Powell,
     name: "Powell Library",
     location: { lat: 34.0715, lng: -118.4419 },
     description: "Main undergraduate library in Romanesque Revival style",
-    imageUrl: "/royce_hall_gay.jpg",
+    imageUrl: "/powell.jpg",
     completed: false
   },
   {
-    id: 4,
+    id: LandmarkName.BruinBear,
     name: "Bruin Bear",
     location: { lat: 34.0708, lng: -118.4425 },
     description: "Bronze Bruin statue, a popular meeting spot",
@@ -144,20 +145,7 @@ export default function MapPage() {
   }, []);
 
   const handleStartPainting = (landmark: Landmark) => {
-    fetch(landmark.imageUrl)
-      .then(response => response.blob())
-      .then(blob => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          localStorage.setItem('paintImage', reader.result as string);
-          localStorage.setItem('paintLocation', landmark.name);
-          router.push('/dashboard/paint');
-        };
-        reader.readAsDataURL(blob);
-      })
-      .catch(error => {
-        console.error('Error loading image:', error);
-      });
+    startPainting(landmark.id, router);
   };
 
   return (

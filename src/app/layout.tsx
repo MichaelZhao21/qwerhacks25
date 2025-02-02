@@ -29,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+      suppressHydrationWarning={true}
         className={`${dynaPuff.style.fontFamily} ${geistMono.variable} antialiased`}
       >
         {children}
