@@ -18,10 +18,10 @@ const pastelColors = [
 ];
 
 export default function PaintPage() {
-  const [selectedColor, setSelectedColor] = useState(pastelColors[0]);
+  // const [selectedColor, setSelectedColor] = useState(pastelColors[0]);
 
   return (
-    <div className="max-h-screen bg-gray-50 relative px-4 pt-4">
+    <div className="h-full bg-gray-50 relative px-4 pt-4 overflow-hidden">
       <PaintByNumbers />
       {/* Canvas Area
       <div className="aspect-video bg-white shadow-lg mx-4 mt-4 mb-48 rounded-lg flex items-center justify-center">

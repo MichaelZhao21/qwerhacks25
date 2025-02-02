@@ -49,7 +49,7 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
                 }
                 pixelArray.push(row);
             }
-            console.log(pixelArray)
+            console.log(pixelArray);
 
             // Identify unique colors and map to numbers
             const colorMap = {};
@@ -184,7 +184,7 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
             setPainted(vis);
             setNameMap(nameMap);
             setColorList(colorList);
-            console.log('???');
+            // console.log('???');
 
             setLoaded(true);
         };
@@ -208,7 +208,6 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
         console.log("Clicked!");
         const canvas = canvasRef.current;
         if (!canvas) return;
-        const ctx = canvas.getContext("2d");
 
         // Get canvas position
         const rect = canvas.getBoundingClientRect();
@@ -222,8 +221,8 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
         const y = Math.floor(ry / scale);
 
         // Check if x and y has been visited or is the wrong color
-        console.log(painted[y][x], pxs[y][x], currentColor+1);
-        if (painted[y][x] || pxs[y][x] !== currentColor+1) return;
+        // console.log(painted[y][x], pxs[y][x], currentColor+1);
+        if (painted[y][x] || pxs[y][x] !== currentColor + 1) return;
 
         // Perform flood fill
         const queue = [[x, y]];
@@ -235,7 +234,7 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
                 x < 0 ||
                 x >= pxs[y].length ||
                 painted[y][x] ||
-                pxs[y][x] !== currentColor+1
+                pxs[y][x] !== currentColor + 1
             ) {
                 continue;
             }
@@ -259,15 +258,16 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
             row.forEach((color, x) => {
                 if (painted[y][x]) {
                     ctx.fillStyle = `rgb(${nameMap[color]})`;
-                    ctx.fillRect(x * scale, y * scale, 1 * scale, 1 * scale);
+                    ctx.fillRect(x, y, 1, 1);
+                    // ctx.fillRect(x * scale, y * scale, 1 * scale, 1 * scale);
                 }
             });
         });
     };
 
     return (
-        <div>
-            <div className="aspect-video bg-white shadow-lg rounded-lg h-2/3 w-full overflow-scroll">
+        <div className="flex flex-col items-center h-[calc(100%-4rem)]">
+            <div className="aspect-video bg-white shadow-lg rounded-lg max-h-2/3 h-fit max-w-full w-fit overflow-scroll">
                 {!loaded && (
                     <div className="flex flex-row items-center justify-center w-screen pt-32">
                         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
@@ -276,7 +276,7 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
                 <div
                     ref={canvasFrameRef}
                     className={`inline-block overflow-hidden w-[800px] h-[600px] ${
-                        ""// loaded ? "" : "hidden"
+                        loaded ? "" : "hidden"
                     }`}
                 >
                     <canvas
@@ -287,24 +287,44 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
                     ></canvas>
                 </div>
             </div>
-            <div className="grid grid-cols-5 gap-6">
-                {colorList.map((color, i) => (
-                    <div
-                        key={color}
-                        className="flex flex-col items-center space-y-2"
-                    >
-                        <button
-                            onClick={() => setCurrentColor(i)}
-                            className={`w-full h-12 rounded-lg ${
-                                currentColor === i ? "ring-4 ring-blue-500" : ""
-                            }`}
-                            style={{ backgroundColor: `rgb(${color})` }}
-                        />
-                        <span className="text-black font-medium">
-                            {i+1}
-                        </span>
+            <div className="grow justify-end flex flex-col w-full mt-4 bg-slate-200 rounded-t-lg">
+                <div className="flex flex-row items-center w-full justify-center space-y-2 my-4">
+                    <p className="text-xl font-semibold text-black pr-10 w-40">
+                        Zoom: {(scale * 100).toFixed(2)}%
+                    </p>
+                    <input
+                        type="range"
+                        min="25"
+                        max="400"
+                        value={scale * 100}
+                        onChange={(e) => setScale(Number(e.target.value) / 100)}
+                        className="w-64 h-2 bg-gray-300 rounded-lg appearance-none cursor-pointer accent-blue-500 transition duration-200"
+                    />
+                </div>
+
+                <div className="w-full h-16 overflow-scroll pt-1 px-2">
+                    <div className="grid grid-cols-5 gap-y-2 gap-x-4 w-full">
+                        {colorList.map((color, i) => (
+                            <div
+                                key={color}
+                                className="flex flex-col items-center space-y-2"
+                            >
+                                <button
+                                    onClick={() => setCurrentColor(i)}
+                                    className={`w-full h-8 rounded-lg ${
+                                        currentColor === i
+                                            ? "ring-4 ring-blue-500"
+                                            : ""
+                                    }`}
+                                    style={{ backgroundColor: `rgb(${color})` }}
+                                />
+                                <span className="text-black font-medium">
+                                    {i + 1}
+                                </span>
+                            </div>
+                        ))}
                     </div>
-                ))}
+                </div>
             </div>
         </div>
     );
