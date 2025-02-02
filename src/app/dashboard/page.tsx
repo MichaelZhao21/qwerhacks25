@@ -28,7 +28,7 @@ export default function DashboardPage() {
       
       {/* Continue Painting Section */}
       <div className="mb-8">
-        <h2 className="text-xl mb-2 text-gray-600">Pick up where you last left off...</h2>
+        <h2 className="text-2xl font-bold mb-2 text-gray-800">Pick up where you last left off...</h2>
         
         <div className="bg-white rounded-lg shadow-lg overflow-hidden text-gray-800">
           {/* Location Text */}

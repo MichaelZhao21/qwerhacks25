@@ -21,7 +21,10 @@ export default function ProfilePage() {
   ];
 
   return (
+    
     <div className="p-4 max-w-2xl mx-auto">
+        
+        
       {/* Profile Header */}
       <div className="flex items-start justify-between mb-6">
         <div className="flex items-center space-x-4">
