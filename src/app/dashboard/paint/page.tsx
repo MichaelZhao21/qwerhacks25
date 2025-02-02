@@ -28,7 +28,8 @@ export default function PaintPage() {
         const storedImage = localStorage.getItem('paintImage');
         
         if (!storedImage) {
-            router.push('/dashboard/upload');
+          console.log("No image found");
+            // router.push('/dashboard/upload');
             return;
         }
 
