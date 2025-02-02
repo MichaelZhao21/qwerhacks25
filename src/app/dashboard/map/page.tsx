@@ -11,7 +11,7 @@ const landmarks = [
     name: "Jewel Thais-Williams",
     location: { lat: 34.0669, lng: -118.4422 }, // Alumni Center coordinates
     description: "UCLA Alumni Center, named after the revolutionary LGBTQ+ and civil rights activist",
-    image: "/images/jewel-thais-williams.png",
+    image: "/jewel_thais_williams.jpg",
     completed: true
   },
   {
@@ -19,7 +19,7 @@ const landmarks = [
     name: "Royce Hall",
     location: { lat: 34.0722, lng: -118.4441 },
     description: "Iconic UCLA building with Roman-collegiate architecture",
-    image: "/images/royce-hall.png",
+    image: "/royce_hall_gay.jpg",
     completed: false
   },
   {
@@ -27,7 +27,7 @@ const landmarks = [
     name: "Powell Library",
     location: { lat: 34.0715, lng: -118.4419 },
     description: "Main undergraduate library in Romanesque Revival style",
-    image: "/images/powell.png",
+    image: "/powell_library.jpg",
     completed: false
   },
   {
@@ -35,7 +35,7 @@ const landmarks = [
     name: "Janss Steps",
     location: { lat: 34.0718, lng: -118.4429 },
     description: "Historic stairs connecting upper and lower campus",
-    image: "/images/janss-steps.png",
+    image: "/janss_steps.jpg",
     completed: false
   },
   {
@@ -43,7 +43,7 @@ const landmarks = [
     name: "Bruin Bear",
     location: { lat: 34.0708, lng: -118.4425 },
     description: "Bronze Bruin statue, a popular meeting spot",
-    image: "/images/bruin-bear.png",
+    image: "/bruin_bear.jpeg",
     completed: false
   }
 ];

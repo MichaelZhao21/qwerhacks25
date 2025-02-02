@@ -39,7 +39,7 @@ export default function DashboardPage() {
           {/* Placeholder Image */}
           <div className="aspect-video bg-gray-100 flex items-center justify-center">
             <img 
-              src="/royce_hall_gay.png" 
+              src="/royce_hall_gay.jpg" 
               alt="Royce Hall WIP"
               className="w-full h-full object-cover"
             />
