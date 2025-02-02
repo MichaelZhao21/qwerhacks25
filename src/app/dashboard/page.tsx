@@ -4,29 +4,23 @@
 import { useRouter } from 'next/navigation';
 import RoyceHall from '@/app/assets/royce-hall.png';
 import { LandmarkName, startPainting } from '../components/landmarks';
+import { useIdentity, Identity } from '@/context/IdentityContext';
 
-type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
-
-const flagColors: Record<Identity, string[]> = {
-  pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
-  trans: ['#55CDFC', '#F7A8B8', '#FFFFFF', '#F7A8B8', '#55CDFC'],
-  bi: ['#D60270', '#9B4F96', '#0038A8'],
-  pan: ['#FF218C', '#FFD800', '#21B1FF'],
-  lesbian: ['#D52D00', '#EF7627', '#FF9A56', '#FFFFFF', '#D162A4', '#B55690', '#A30262'],
-  nonbinary: ['#FCF434', '#FFFFFF', '#9C59D1', '#2C2C2C']
-};
 export default function DashboardPage() {
   const router = useRouter();
 
-  const selectedIdentity: Identity = 'pride';
-
-  const generateGradient = (colors: string[]) => {
-    return `linear-gradient(135deg, ${colors.join(', ')})`;
-  };
+  const { 
+    selectedIdentity, 
+    setSelectedIdentity, 
+    generateGradient, 
+    getIdentityColors 
+  } = useIdentity();
 
   const finish = async () => {
     startPainting(LandmarkName.Royce, router);
   }
+
+  const colors = getIdentityColors();
 
   return (
     <div className="p-4">
@@ -54,7 +48,7 @@ export default function DashboardPage() {
           
           {/* Action Button */}
           <div className="p-4 bg-white">
-            <div className="p-1 rounded-lg" style={{ background: generateGradient(flagColors[selectedIdentity]) }}>
+            <div className="p-1 rounded-lg" style={{ background: generateGradient(colors) }}>
               <button 
                 onClick={finish}
                 className="w-full py-3 px-6 rounded-md font-medium bg-white hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
@@ -68,7 +62,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="pb-24 px-4">
-            <div className="p-1 rounded-lg" style={{ background: generateGradient(flagColors[selectedIdentity]) }}>
+            <div className="p-1 rounded-lg" style={{ background: generateGradient(colors) }}>
               <button 
                 onClick={() => router.push('/dashboard/upload')}
                 className="w-full py-3 px-6 rounded-md font-medium bg-white hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
