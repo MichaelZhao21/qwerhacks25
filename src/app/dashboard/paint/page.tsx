@@ -21,7 +21,7 @@ export default function PaintPage() {
   // const [selectedColor, setSelectedColor] = useState(pastelColors[0]);
 
   return (
-    <div className="h-full bg-gray-50 relative px-4 pt-4 overflow-hidden">
+    <div className="h-[calc(100vh-3rem)] bg-gray-50 relative px-4 pt-4 overflow-hidden">
       <PaintByNumbers />
       {/* Canvas Area
       <div className="aspect-video bg-white shadow-lg mx-4 mt-4 mb-48 rounded-lg flex items-center justify-center">

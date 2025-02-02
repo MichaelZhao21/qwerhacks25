@@ -266,8 +266,8 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
     };
 
     return (
-        <div className="flex flex-col items-center h-[calc(100%-4rem)]">
-            <div className="aspect-video bg-white shadow-lg rounded-lg max-h-2/3 h-fit max-w-full w-fit overflow-scroll">
+        <div className="flex flex-col items-center h-full">
+            <div className="aspect-video bg-white shadow-lg rounded-lg max-h-2/3 h-fit max-w-[1000px] w-fit overflow-scroll">
                 {!loaded && (
                     <div className="flex flex-row items-center justify-center w-screen pt-32">
                         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
@@ -287,9 +287,9 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
                     ></canvas>
                 </div>
             </div>
-            <div className="grow justify-end flex flex-col w-full mt-4 bg-slate-200 rounded-t-lg">
+            <div className="flex flex-col w-full mt-4 bg-slate-200 rounded-t-lg grow">
                 <div className="flex flex-row items-center w-full justify-center space-y-2 my-4">
-                    <p className="text-xl font-semibold text-black pr-10 w-40">
+                    <p className="text-xl font-semibold text-black pr-10 w-[15rem]">
                         Zoom: {(scale * 100).toFixed(2)}%
                     </p>
                     <input
@@ -302,7 +302,7 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
                     />
                 </div>
 
-                <div className="w-full h-16 overflow-scroll pt-1 px-2">
+                <div className="w-full h-16 overflow-scroll pt-1 px-2 grow">
                     <div className="grid grid-cols-5 gap-y-2 gap-x-4 w-full">
                         {colorList.map((color, i) => (
                             <div
