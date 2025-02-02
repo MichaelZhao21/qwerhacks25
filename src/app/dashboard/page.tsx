@@ -32,8 +32,9 @@ export default function DashboardPage() {
         <div className="bg-white rounded-lg shadow-lg overflow-hidden text-gray-800">
           {/* Location Text */}
           <div className="p-4 border-b">
-            <h3 className="text-lg font-medium">Royce Hall, LA, CA</h3>
-          </div>
+
+          <h3 className="text-lg font-medium">Royce Hall</h3>
+            <h4 className="text-md font-medium text-gray-600">LA, CA</h4>          </div>
           
           {/* Placeholder Image */}
           <div className="aspect-video bg-gray-100 flex items-center justify-center">
