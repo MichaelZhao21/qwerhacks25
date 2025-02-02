@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { ChevronDown } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
 
@@ -16,6 +17,13 @@ const flagColors: Record<Identity, string[]> = {
 };
 
 export default function Home() {
+
+  const router = useRouter();
+
+  const handleLogin = () => {
+    router.push('/dashboard');
+  };
+
   const [selectedIdentity, setSelectedIdentity] = useState<Identity>('pride');
   const colors = flagColors[selectedIdentity];
 
@@ -26,7 +34,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div 
-        className="p-1 rounded-2xl w-96"
+        className="p-2 rounded-2xl w-96"
         style={{ background: generateGradient(colors) }}
       >
         <div className="bg-white rounded-xl p-8 space-y-6">
@@ -44,7 +52,7 @@ export default function Home() {
             <select
               value={selectedIdentity}
               onChange={(e) => setSelectedIdentity(e.target.value as Identity)}
-              className="w-full p-3 border rounded-lg appearance-none cursor-pointer"
+              className="w-full p-3 border rounded-lg appearance-none cursor-pointer text-gray-800"
             >
               <option value="pride">Pride</option>
               <option value="trans">Trans</option>
@@ -61,18 +69,19 @@ export default function Home() {
             <input
               type="email"
               placeholder="Email"
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-lg text-gray-800"
             />
             <input
               type="password"
               placeholder="Password"
-              className="w-full p-3 border rounded-lg"
+              className="w-full p-3 border rounded-lg text-gray-800"
             />
           </div>
 
           {/* Buttons */}
           <div className="space-y-3">
             <button
+              onClick={handleLogin}
               className="w-full py-3 px-4 rounded-lg text-white font-medium transition-colors"
               style={{ background: colors[0] }}
             >
