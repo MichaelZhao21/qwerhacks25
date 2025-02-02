@@ -5,20 +5,11 @@ import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { Upload, Image as ImageIcon, Loader } from 'lucide-react';
 
-type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
+import { Identity, useIdentity } from '@/context/IdentityContext';
 
-const flagColors: Record<Identity, string[]> = {
-  pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
-  trans: ['#55CDFC', '#F7A8B8', '#FFFFFF', '#F7A8B8', '#55CDFC'],
-  bi: ['#D60270', '#9B4F96', '#0038A8'],
-  pan: ['#FF218C', '#FFD800', '#21B1FF'],
-  lesbian: ['#D52D00', '#EF7627', '#FF9A56', '#FFFFFF', '#D162A4', '#B55690', '#A30262'],
-  nonbinary: ['#FCF434', '#FFFFFF', '#9C59D1', '#2C2C2C']
-};
 
 export default function UploadPage() {
   const router = useRouter();
-  const [selectedIdentity] = useState<Identity>('pride');
   const [isDragging, setIsDragging] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [processedImage, setProcessedImage] = useState<string | null>(null);
@@ -28,9 +19,9 @@ export default function UploadPage() {
   const [minArea, setMinArea] = useState('50');
   const [error, setError] = useState<string | null>(null);
 
-  const generateGradient = (colors: string[]) => {
-    return `linear-gradient(135deg, ${colors.join(', ')})`;
-  };
+  const { selectedIdentity, getIdentityColors, generateGradient } = useIdentity();
+
+  const colors = getIdentityColors();
 
   const handleDrag = useCallback((e: React.DragEvent) => {
     e.preventDefault();
@@ -237,7 +228,7 @@ export default function UploadPage() {
 
       {/* Submit Button */}
       <div className="mt-6 flex justify-center">
-        <div className="p-1 rounded-lg inline-block" style={{ background: generateGradient(flagColors[selectedIdentity]) }}>
+        <div className="p-1 rounded-lg inline-block" style={{ background: generateGradient(colors) }}>
           <button 
             onClick={handleStartPainting}
             disabled={!processedImage || !location || isProcessing}
