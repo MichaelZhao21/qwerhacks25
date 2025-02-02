@@ -24,6 +24,10 @@ export default function Home() {
     router.push('/dashboard');
   };
 
+  const handleSignUp = () => {
+    router.push('/signup');
+  };
+
   const [selectedIdentity, setSelectedIdentity] = useState<Identity>('pride');
   const colors = flagColors[selectedIdentity];
 
@@ -88,6 +92,7 @@ export default function Home() {
               Log In
             </button>
             <button
+              onClick={handleSignUp}
               className="w-full py-3 px-4 rounded-lg text-white font-medium transition-colors"
               style={{ background: colors[colors.length - 1] }}
             >

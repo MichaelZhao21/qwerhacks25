@@ -60,6 +60,17 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      <div className="p-4 bg-white">
+            <div className="p-1 rounded-lg" style={{ background: generateGradient(flagColors[selectedIdentity]) }}>
+              <button 
+                onClick={() => router.push('/dashboard/upload')}
+                className="w-full py-3 px-6 rounded-md font-medium bg-white hover:bg-gray-50 transition-colors flex items-center justify-center space-x-2"
+              >
+                <span className="text-gray-800">New</span>
+              </button>
+            </div>
+          </div>
+
       {/* Other Dashboard Content */}
       {/* <div className="space-y-4">
         <div className="bg-white p-4 rounded-lg shadow">
