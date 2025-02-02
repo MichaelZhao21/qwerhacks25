@@ -4,14 +4,33 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-// UCLA landmarks data
-const landmarks = [
+type Identity = 'pride' | 'trans' | 'bi' | 'pan' | 'lesbian' | 'nonbinary';
+
+const flagColors: Record<Identity, string[]> = {
+  pride: ['#FF0018', '#FFA52C', '#FFFF41', '#008018', '#0000F9', '#86007D'],
+  trans: ['#55CDFC', '#F7A8B8', '#FFFFFF', '#F7A8B8', '#55CDFC'],
+  bi: ['#D60270', '#9B4F96', '#0038A8'],
+  pan: ['#FF218C', '#FFD800', '#21B1FF'],
+  lesbian: ['#D52D00', '#EF7627', '#FF9A56', '#FFFFFF', '#D162A4', '#B55690', '#A30262'],
+  nonbinary: ['#FCF434', '#FFFFFF', '#9C59D1', '#2C2C2C']
+};
+
+interface Landmark {
+  id: number;
+  name: string;
+  location: { lat: number; lng: number };
+  description: string;
+  imageUrl: string;
+  completed: boolean;
+}
+
+const landmarks: Landmark[] = [
   {
     id: 1,
     name: "Jewel Thais-Williams",
-    location: { lat: 34.0669, lng: -118.4422 }, // Alumni Center coordinates
+    location: { lat: 34.0669, lng: -118.4422 },
     description: "UCLA Alumni Center, named after the revolutionary LGBTQ+ and civil rights activist",
-    image: "/jewel_thais_williams.jpg",
+    imageUrl: "/jewel_thais_williams.jpg",
     completed: true
   },
   {
@@ -19,7 +38,7 @@ const landmarks = [
     name: "Royce Hall",
     location: { lat: 34.0722, lng: -118.4441 },
     description: "Iconic UCLA building with Roman-collegiate architecture",
-    image: "/royce_hall_gay.jpg",
+    imageUrl: "/royce_hall_gay.jpg",
     completed: false
   },
   {
@@ -27,35 +46,26 @@ const landmarks = [
     name: "Powell Library",
     location: { lat: 34.0715, lng: -118.4419 },
     description: "Main undergraduate library in Romanesque Revival style",
-    image: "/powell_library.jpg",
+    imageUrl: "/royce_hall_gay.jpg",
     completed: false
   },
   {
     id: 4,
-    name: "Janss Steps",
-    location: { lat: 34.0718, lng: -118.4429 },
-    description: "Historic stairs connecting upper and lower campus",
-    image: "/janss_steps.jpg",
-    completed: false
-  },
-  {
-    id: 5,
     name: "Bruin Bear",
     location: { lat: 34.0708, lng: -118.4425 },
     description: "Bronze Bruin statue, a popular meeting spot",
-    image: "/bruin_bear.jpeg",
+    imageUrl: "/bruin_bear.jpeg",
     completed: false
   }
 ];
 
 export default function MapPage() {
   const router = useRouter();
-  const [selectedLandmark, setSelectedLandmark] = useState<any>(null);
+  const [selectedLandmark, setSelectedLandmark] = useState<Landmark | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [markers, setMarkers] = useState<google.maps.Marker[]>([]);
 
   useEffect(() => {
-    // Load Google Maps script
     const loadMap = () => {
       if (!window.google) {
         const script = document.createElement('script');
@@ -71,8 +81,8 @@ export default function MapPage() {
 
     const initMap = () => {
       const mapInstance = new google.maps.Map(document.getElementById('map')!, {
-        center: { lat: 34.0669, lng: -118.4422 }, // Centered on Alumni Center
-        zoom: 17, // Slightly closer zoom
+        center: { lat: 34.0669, lng: -118.4422 },
+        zoom: 17,
         styles: [
           {
             featureType: "poi",
@@ -82,7 +92,6 @@ export default function MapPage() {
         ],
       });
 
-      // Create markers for each landmark
       const newMarkers = landmarks.map(landmark => {
         const marker = new google.maps.Marker({
           position: landmark.location,
@@ -90,12 +99,30 @@ export default function MapPage() {
           title: landmark.name,
           icon: {
             path: google.maps.SymbolPath.CIRCLE,
-            scale: 10,
             fillColor: landmark.completed ? '#4CAF50' : '#2196F3',
-            fillOpacity: 0.7,
+            fillOpacity: 0.9,
             strokeWeight: 2,
             strokeColor: 'white',
+            scale: landmark.id === 1 ? 8 : 6,
+            anchor: new google.maps.Point(0, 0)
           }
+        });
+
+        // Add hover animation
+        marker.addListener('mouseover', () => {
+          marker.setIcon({
+            ...marker.getIcon() as google.maps.Symbol,
+            scale: landmark.id === 1 ? 10 : 8,
+            fillOpacity: 1
+          });
+        });
+
+        marker.addListener('mouseout', () => {
+          marker.setIcon({
+            ...marker.getIcon() as google.maps.Symbol,
+            scale: landmark.id === 1 ? 8 : 6,
+            fillOpacity: 0.9
+          });
         });
 
         marker.addListener('click', () => {
@@ -110,7 +137,28 @@ export default function MapPage() {
     };
 
     loadMap();
+
+    return () => {
+      markers.forEach(marker => marker.setMap(null));
+    };
   }, []);
+
+  const handleStartPainting = (landmark: Landmark) => {
+    fetch(landmark.imageUrl)
+      .then(response => response.blob())
+      .then(blob => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          localStorage.setItem('paintImage', reader.result as string);
+          localStorage.setItem('paintLocation', landmark.name);
+          router.push('/dashboard/paint');
+        };
+        reader.readAsDataURL(blob);
+      })
+      .catch(error => {
+        console.error('Error loading image:', error);
+      });
+  };
 
   return (
     <div className="h-screen relative">
@@ -132,10 +180,10 @@ export default function MapPage() {
               ✕
             </button>
           </div>
-          {selectedLandmark.image && (
+          {selectedLandmark.imageUrl && (
             <div className="mt-3">
               <img 
-                src={selectedLandmark.image} 
+                src={selectedLandmark.imageUrl} 
                 alt={selectedLandmark.name}
                 className="w-full h-32 object-cover rounded-lg"
               />
@@ -143,7 +191,7 @@ export default function MapPage() {
           )}
           <div className="mt-3 flex justify-end">
             <button
-              onClick={() => router.push('/dashboard/paint')}
+              onClick={() => handleStartPainting(selectedLandmark)}
               className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
               Paint This!

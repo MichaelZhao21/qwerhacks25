@@ -1,8 +1,9 @@
 // src/app/dashboard/paint/page.tsx
 'use client'
 
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import PaintByNumbers from '@/app/components/PaintByNumbers';
-import { useState } from 'react';
 
 const pastelColors = [
   { id: 1, color: '#FFB3BA', name: 'Pastel Pink' },
@@ -20,10 +21,31 @@ const pastelColors = [
 export default function PaintPage() {
   // const [selectedColor, setSelectedColor] = useState(pastelColors[0]);
 
+  const [imageSource, setImageSource] = useState<string | null>(null);
+    const router = useRouter();
+
+    useEffect(() => {
+        const storedImage = localStorage.getItem('paintImage');
+        
+        if (!storedImage) {
+            router.push('/dashboard/upload');
+            return;
+        }
+
+        setImageSource(storedImage);
+        localStorage.removeItem('paintImage');
+    }, [router]);
+
+    if (!imageSource) {
+        return <div>Loading...</div>;
+    }
+
   return (
     <div className="h-[calc(100vh-3rem)] bg-gray-50 relative px-4 pt-4 overflow-hidden">
-      <PaintByNumbers />
-      {/* Canvas Area
+        <div className="min-h-screen bg-gray-50">
+            <PaintByNumbers imageSource={imageSource} />
+        </div>      
+        {/* Canvas Area
       <div className="aspect-video bg-white shadow-lg mx-4 mt-4 mb-48 rounded-lg flex items-center justify-center">
         <img 
           src="/images/royce-hall.png"

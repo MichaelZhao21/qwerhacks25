@@ -1,9 +1,10 @@
-import RoyceHall from "@/app/assets/royce-hall.png";
+// import RoyceHall from "@/app/assets/royce-hall.png";
 import { useEffect, useRef, useState } from "react";
 
-interface PaintByNumbersProps {}
-
-export default function PaintByNumbers(props: PaintByNumbersProps) {
+interface PaintByNumbersProps {
+    imageSource: string;  // Add this prop
+}
+export default function PaintByNumbers({ imageSource }: PaintByNumbersProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const canvasFrameRef = useRef<HTMLDivElement>(null);
     const [width, setWidth] = useState(800);
@@ -23,7 +24,8 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
         if (!ctx) return;
 
         const img = new Image();
-        img.src = RoyceHall.src;
+        // img.src = RoyceHall.src;
+        img.src = imageSource;
 
         img.onload = () => {
             canvas.width = img.width;
@@ -188,7 +190,7 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
 
             setLoaded(true);
         };
-    }, []);
+    }, [imageSource]);
 
     useEffect(() => {
         canvasRef.current?.style.setProperty("transform", `scale(${scale})`);
