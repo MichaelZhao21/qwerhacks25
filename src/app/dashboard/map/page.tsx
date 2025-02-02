@@ -29,7 +29,7 @@ const landmarks: Landmark[] = [
     id: 1,
     name: "Jewel Thais-Williams",
     location: { lat: 34.0669, lng: -118.4422 },
-    description: "UCLA Alumni Center, named after the revolutionary LGBTQ+ and civil rights activist",
+    description: "Jewel Thais-Williams is a UCLA alumni who founded the Catch One. She was the first black woman in the  US to own a nightclub. It was a safe space for LGBTQ+ and Black communities in Los Angeles.",
     imageUrl: "/jewel_thais_williams.jpg",
     completed: true
   },
@@ -37,7 +37,7 @@ const landmarks: Landmark[] = [
     id: 2,
     name: "Royce Hall",
     location: { lat: 34.0722, lng: -118.4441 },
-    description: "Iconic UCLA building with Roman-collegiate architecture",
+    description: "Royce Hall, UCLA’s most iconic building, is illuminated with rainbow lights during Pride Month to honor and celebrate the LGBTQ+ community. In the past, students organizations like Bimbos Theatre Co. have hosted drag showcases for charity on the big stage.",
     imageUrl: "/royce_hall_gay.jpg",
     completed: false
   },
