@@ -1,6 +1,7 @@
 // src/app/dashboard/paint/page.tsx
 'use client'
 
+import PaintByNumbers from '@/app/components/PaintByNumbers';
 import { useState } from 'react';
 
 const pastelColors = [
@@ -20,8 +21,9 @@ export default function PaintPage() {
   const [selectedColor, setSelectedColor] = useState(pastelColors[0]);
 
   return (
-    <div className="min-h-screen bg-gray-50 relative pb-48">
-      {/* Canvas Area */}
+    <div className="max-h-screen bg-gray-50 relative px-4 pt-4">
+      <PaintByNumbers />
+      {/* Canvas Area
       <div className="aspect-video bg-white shadow-lg mx-4 mt-4 mb-48 rounded-lg flex items-center justify-center">
         <img 
           src="/images/royce-hall.png"
@@ -30,10 +32,8 @@ export default function PaintPage() {
         />
       </div>
 
-      {/* Color Toolbox */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg h-44">
         <div className="max-w-2xl mx-auto px-6 py-4">
-          {/* First Row */}
           <div className="grid grid-cols-5 gap-6 mb-6">
             {pastelColors.slice(0, 5).map((color) => (
               <div key={color.id} className="flex flex-col items-center space-y-2">
@@ -48,7 +48,6 @@ export default function PaintPage() {
               </div>
             ))}
           </div>
-          {/* Second Row */}
           <div className="grid grid-cols-5 gap-6">
             {pastelColors.slice(5).map((color) => (
               <div key={color.id} className="flex flex-col items-center space-y-2">
@@ -64,7 +63,7 @@ export default function PaintPage() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
