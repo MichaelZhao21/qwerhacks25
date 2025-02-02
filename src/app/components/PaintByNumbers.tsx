@@ -267,7 +267,7 @@ export default function PaintByNumbers(props: PaintByNumbersProps) {
 
     return (
         <div className="flex flex-col items-center h-full">
-            <div className="aspect-video bg-white shadow-lg rounded-lg max-h-2/3 h-fit max-w-[1000px] w-fit overflow-scroll">
+            <div className="aspect-video bg-white shadow-lg rounded-lg max-h-[60vh] h-fit w-fit overflow-scroll">
                 {!loaded && (
                     <div className="flex flex-row items-center justify-center w-screen pt-32">
                         <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
