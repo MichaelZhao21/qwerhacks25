@@ -1,10 +1,18 @@
 from flask import Flask, request, send_file
+from flask_pymongo import PyMongo
 from flask_cors import CORS
 from io import BytesIO
 from src.imgtopaint import image_to_paint_by_numbers
+import dotenv
+import os
+
+dotenv.load_dotenv()
 
 app = Flask(__name__)
 CORS(app)
+app.config["MONGO_URI"] = os.getenv("MONGO_URI")
+mongo = PyMongo(app)
+
 
 @app.route("/")
 def index():

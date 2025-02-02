@@ -34,7 +34,7 @@ export default function PaintPage() {
         }
 
         setImageSource(storedImage);
-        localStorage.removeItem('paintImage');
+        // localStorage.removeItem('paintImage');
     }, [router]);
 
     if (!imageSource) {
@@ -43,7 +43,7 @@ export default function PaintPage() {
 
   return (
     <div className="h-[calc(100vh-3rem)] bg-gray-50 relative px-4 pt-4 overflow-hidden">
-        <div className="min-h-screen bg-gray-50">
+        <div className="h-screen bg-gray-50">
             <PaintByNumbers imageSource={imageSource} />
         </div>      
         {/* Canvas Area

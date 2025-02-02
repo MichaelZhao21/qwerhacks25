@@ -24,7 +24,7 @@ export default function UploadPage() {
   const [processedImage, setProcessedImage] = useState<string | null>(null);
   const [location, setLocation] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
-  const [colorCount, setColorCount] = useState('20');
+  const [colorCount, setColorCount] = useState('10');
   const [minArea, setMinArea] = useState('50');
   const [error, setError] = useState<string | null>(null);
 
